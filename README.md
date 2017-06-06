@@ -39,13 +39,36 @@ var address = '100 Main St';
 ### Object
 A collection of name value pairs. 
 
+```
+var person = {
+    name: "John Doe",
+    address: "100 Main St."
+}
+```
+
 The Global Object in JS is represented by '**this**'.
 
-In JavaScript when you create variables and functions, those values get attacjed to the global variable.
+In JavaScript when you create variables and functions, those values get attached to the global variable.
 
 ### The Execution Context
 Creation and **Hoisting**. 
-If you have any variables defined in the function scope, it will be brought to the very top. Declare your variables on top of the function.
+If you have any variables defined in the function scope, it will be brought to the very top. 
+
+Declare your variables on top of the function.
+
+```
+console.log(x);
+x = 21;
+
+OUTPUT: undefined
+```
+
+```
+x = 21;
+console.log(x);
+
+OUTPUT: 21
+```
 
 **undefined** in JavaScript means the variable has not been set.
 
@@ -57,6 +80,16 @@ One at a time and in order.
 
 ### Invocation
 Running a Function by using parenthesis.
+
+```
+function hello (first, last){
+    console.log("Hello, " + first + " " + last);
+}
+
+hello("john", "doe");
+
+OUTPUT: "Hello, john doe"
+```
 
 Every context creates a execution context and they are stocked.
 
@@ -70,10 +103,12 @@ Where a variable is available in your code.
 ### Asynchronous
 More than one at a time. 
 
-**event** queue happens after something happens in JavaScript. Like a click reuqest.
+**event** queue happens after something happens in JavaScript. Like a click request.
 
 ```
-document.addEventListener('click', clickHandler)
+document.addEventListener('click', clickHandler(e){
+    //do something here
+})
 ```
 
 ## Types and Operators
@@ -81,7 +116,7 @@ document.addEventListener('click', clickHandler)
 You don't tell the JavaScript engine what type of data a variable holds, it figures it out while your code is running. 
 
 ### Static Typing
-Define the data type beforehand. (ie. Java)
+In Static Typing programming languages, you define the data type beforehand. (ie. Java)
 
 **undefined** a lack of existence 
 **null** a lack of existence
@@ -111,7 +146,17 @@ JSON.parse
 Functions are objects in JS.
 
 ### First Class Functions
-Everything you can do with other types, tou can do with functions. 
+Everything you can do with other types, you can do with functions. A function is an Object in JavaScript. 
+
+```
+// Create a function that takes two arguments and returns the sum of those arguments
+var adder = new Function('a', 'b', 'return a + b');
+
+// Call the function
+adder(2, 6);
+
+OUTPUT:  8
+```
 
 ### Expression
 A unit of code that results in a value. 
@@ -137,18 +182,32 @@ A function inside a function in a object literal refers to the window object.
 
 Arrays can contain any type of data because it is untyped. 
 
-### Arguements
+### Arguments 
 The paramaters you pass to a function.
 
 You can set default values to parameters in future JS parameters.
 
-Call the arguement by using the "arguements" object in JS. 
+```
+x = sumAll(500, 88);
 
-'**...spead**' takes a series of arguements and creates a array.
+function sumAll() {
+    var i, sum = 0;
+    for (i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+    }
+    return sum;
+}
+
+OUTPUT: 588
+```
+
+Call the argument by using the "arguments" object in JS. 
+
+'**...spead**' takes a series of arguments and creates a array.
 
 Semicolons are optional in JavaScript. 
 
-JavaScript will enter a semicolon for you on statements when you press enter.
+The JavaScript engine will interpret where to insert it for you. 
 
 ### Immediately Invoked Function Expressions (IIFE)
 Running a function expression after defining it. 
@@ -158,7 +217,7 @@ var greeting = function (name){
     return 'Hello ' + name;
 }();
 
-Notice the the () call. 
+// Notice the the () call. 
 ```
 
 ### Closures
@@ -183,7 +242,9 @@ Function object in JS composes of:
 - call() apply() bind()
 
 **.bind** - Combines objects to allow functions and properties to be accessible. It defines the "**this**" in a function.
+
 **.call** - Same as bind, but it executes. 
+
 **.apply** - Same as call, but it expects an array of values.
 
 ```
@@ -210,20 +271,55 @@ verbose, private, protected, friend, etc
 ### Protypal Inheritance
 Simple, flexible, extensible, easy to understand. 
 
-All objects have a property function called __proto__.
+All objects have a property object called **prototype**.
 
-Prototype instances are accessible with new object instances. 
+All prototypes are accessible with new object instances. 
 
-Everything is an object. 
+Example:
+```
+function Car() {
 
-"for in" loops through all properties in a object.
+}
 
+Car.prototype.speedUp = function(){
+    console.log("going faster!")
+}
+
+var porsche = new Car();
+
+porshe.speedUp(); 
+
+OUTPUT: "going faster!"
+```
+
+### Differential Inheritance
+JavaScript uses "differential inheritance". Meaning, methods are not copied from parent to child, instead the children have a link back to their parent object. 
+
+- porsche.speedUp() doesn't exist
+- JavaScript looks up the prototype chain to find the Car.prototype.speedUp()
+
+### Creating new Objects
 Create objects using the "new" keyword. 
 
-"new" creates an empty object. 
+```
+function Car(type, model) {
+    this.type = type;
+    this.model = model;
+}
+
+Car.prototype.whichCar = function {
+    return this.type + " " + this.model;
+}
+
+var honda = new Car("Honda", "Civic");
+ 
+honda.whichCar();
+
+OUTPUT: "Honda Civic"
+```
 
 ### Function Constructors
-A normal function that is used to constant object. 
+A normal function that is used to create a object. 
 
 In good written JS code you will find properties declared in the object, and functions using prototype functions. 
 
@@ -249,11 +345,12 @@ var greenBox = new Box("green");
 alert(greenBox.getColor()); // will alert green
 ```
 
-JavaScript comes with standard built-in objects with constructors. 
+JavaScript comes with standard built-in objects with constructors. They also have empty prototype properties.
 
-They also have prototype properties.
-
-Example: String.Date
+```
+console.log(blueBox.prototype);
+OUTPUT: Object {}
+```
 
 ## Building Objects
 
@@ -288,8 +385,6 @@ A different way to type something that doesn't change how it works under the hoo
 
 ### Use Strict
 "use strict" to declare strict rules JavaScript code runs. 
-
-## Brief JavaScript ES6 review.
 
 
 
